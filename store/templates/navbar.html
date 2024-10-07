@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>NAVBAR</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.css"  rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            padding-top: 80px; /* Adjust this value based on your navbar height */
+        }
+    </style>
+</head>
+<body class="font-sans">
+
+<!-- Navigation -->
+<nav class="font-['Nunito'] bg-white shadow-lg fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-20">
+            <!-- Logo and Brand -->
+            <div class="flex-shrink-0 flex items-center">
+                <img src="/media/uploads/product/logo.png" alt="logo PharmaHope" class="w-12 h-12 transition-transform duration-300 hover:scale-110">
+                <span class="ml-2 text-2xl md:text-3xl font-bold">
+                    <span class="text-green-500 hover:text-green-600 transition-colors duration-300">Pharma</span>
+                    <span class="text-blue-900 hover:text-blue-800 transition-colors duration-300">Hope</span>
+                </span>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="{% url 'home' %}" class="text-gray-600 hover:text-blue-500 transition-colors duration-300 relative group">
+                    Home
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+
+                <!-- Store Dropdown -->
+                <div class="relative group" id="store-dropdown">
+                    <button class="text-gray-600 hover:text-blue-500 transition-colors duration-300 flex items-center" id="store-button">
+                        Store
+                        <svg class="ml-1 w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <div class="hidden absolute left-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 z-50" id="store-menu">
+                        <a href="{% url 'category_summary' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Categories</a>
+                        <div class="relative group">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 flex justify-between items-center">
+                                Browse Categories
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                            <div class="hidden absolute left-full top-0 w-48 ml-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1">
+                                <a href="{% url 'category' 'ADD ADHD' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">ADD/ADHD</a>
+                                <a href="{% url 'category' 'Anti Anxiety' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Anti Anxiety</a>
+                                <a href="{% url 'category' 'Pain Killers' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Pain Killers</a>
+                                <a href="{% url 'category' 'Anti Depression' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Anti Depression</a>
+                            </div>
+                        </div>
+                        <a href="{% url 'shop' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">All Products</a>
+                    </div>
+                </div>
+
+                <a href="{% url 'about' %}" class="text-gray-600 hover:text-blue-500 transition-colors duration-300 relative group">
+                    About
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+                <a href="{% url 'contact' %}" class="text-gray-600 hover:text-blue-500 transition-colors duration-300 relative group">
+                    Contact
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+                <a href="{% url 'faq' %}" class="text-gray-600 hover:text-blue-500 transition-colors duration-300 relative group">
+                    FAQ
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+            </div>
+
+            <!-- Right side items -->
+            <div class="flex items-center space-x-4">
+                <!-- Search Bar -->
+                <div class="hidden md:block relative">
+                   <a href="{% url 'search' %}">
+                    <input type="search" placeholder="Search Products..." class="w-64 pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:border-blue-500 transition-all duration-300">
+                    <svg class="absolute left-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                       </a>
+                </div>
+
+                <!-- Cart -->
+                <a href="{% url 'cart_summary' %}" class="relative group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-500 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 32 32">
+                        <path fill="currentColor" d="M29.02 11.754L8.416 9.474L7.16 4.715a.76.76 0 0 0-.727-.558H3.34a1.21 1.21 0 0 0-.963-.49a1.24 1.24 0 1 0 0 2.483c.4 0 .738-.2.965-.492h2.512l5.23 19.8a3.28 3.28 0 0 0-.89 2.242a3.29 3.29 0 0 0 3.292 3.293a3.296 3.296 0 0 0 3.297-3.293a3.2 3.2 0 0 0-.093-.743h5.533a3.3 3.3 0 0 0-.092.743c0 1.82 1.476 3.293 3.296 3.293S28.72 29.52 28.72 27.7a3.296 3.296 0 0 0-3.294-3.297c-.95 0-1.8.41-2.402 1.053h-7.136a3.28 3.28 0 0 0-2.402-1.053c-.38 0-.738.078-1.077.196l-.182-.686H26.81a2.5 2.5 0 0 0 2.39-1.96l1.575-7.798a2 2 0 0 0 .04-.414a1.995 1.995 0 0 0-1.795-1.988z"/>
+                    </svg>
+                    <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110">
+                        {{ cart|length }}
+                    </span>
+                </a>
+
+                <!-- User Menu -->
+                <div class="relative ml-3">
+                    <button type="button" class="flex items-center space-x-2 focus:outline-none" id="user-menu-button">
+                        <img class="h-10 w-10 rounded-full border-2 border-green-500 transition-transform duration-300 hover:scale-110" src="/media/uploads/product/WhatsApp Image 2024-09-18 à 14.05.58_a14ae1af.jpg" alt="User profile">
+                    </button>
+
+                    <div class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1" id="user-menu-dropdown">
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'update_user' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">User Profile</a>
+                            <a href="{% url 'update_info' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">User Info</a>
+                            <a href="{% url 'logout' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Logout</a>
+                         {% if user.is_superuser %}
+                        <a href="{% url 'shipped_dash' %}" class="block px-4 py-2 text-sm text-black font-semibold hover:bg-blue-50">Shipped Orders</a>
+                        <a href="{% url 'not_shipped_dash'  %}}" class="block px-4 py-2 text-sm text-black font-semibold hover:bg-blue-50">UnShipped Orders</a>
+
+                        {% endif %}
+
+                        {% else %}
+                            <a href="{% url 'login' %}" class="block px-4 py-2 text-sm text-black font-semibold hover:bg-blue-50">Login</a>
+                            <hr class="my-1">
+                            <a href="{% url 'register' %}" class="block px-4 py-2 text-sm text-black font-semibold hover:bg-blue-50">Register</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button type="button" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500" id="mobile-menu-button">
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="hidden md:hidden bg-white border-t border-gray-200" id="mobile-menu">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+            <a href="{% url 'home' %}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Home</a>
+            <a href="{% url 'shop' %}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Store</a>
+            <a href="{% url 'about' %}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">About</a>
+            <a href="{% url 'contact' %}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Contact</a>
+            <a href="{% url 'faq' %}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">FAQ</a>
+        </div>
+    </div>
+</nav>
+
+<script>
+// User menu toggle
+const userMenuButton = document.getElementById('user-menu-button');
+const userMenuDropdown = document.getElementById('user-menu-dropdown');
+let userMenuOpen = false;
+
+userMenuButton.addEventListener('click', (event) => {
+    event.stopPropagation();
+    userMenuOpen = !userMenuOpen;
+    userMenuDropdown.classList.toggle('hidden', !userMenuOpen);
+});
+
+// Store dropdown toggle
+const storeButton = document.getElementById('store-button');
+const storeMenu = document.getElementById('store-menu');
+let storeMenuOpen = false;
+
+storeButton.addEventListener('click', (event) => {
+    event.stopPropagation();
+    storeMenuOpen = !storeMenuOpen;
+    storeMenu.classList.toggle('hidden', !storeMenuOpen);
+});
+
+// Mobile menu toggle
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+let mobileMenuOpen = false;
+
+mobileMenuButton.addEventListener('click', (event) => {
+    event.stopPropagation();
+    mobileMenuOpen = !mobileMenuOpen;
+    mobileMenu.classList.toggle('hidden', !mobileMenuOpen);
+});
+
+// Close all menus when clicking outside
+document.addEventListener('click', () => {
+    if (userMenuOpen) {
+        userMenuDropdown.classList.add('hidden');
+        userMenuOpen = false;
+    }
+    if (storeMenuOpen) {
+        storeMenu.classList.add('hidden');
+        storeMenuOpen = false;
+    }
+    if (mobileMenuOpen) {
+        mobileMenu.classList.add('hidden');
+        mobileMenuOpen = false;
+    }
+});
+
+// Prevent clicks inside dropdowns from closing them
+document.querySelectorAll('.dropdown-menu').forEach(menu => {
+    menu.addEventListener('click', (event) => {
+        event.stopPropagation();
+    });
+});
+
+// Navbar scroll behavior
+let lastScrollTop = 0;
+const navbar = document.getElementById('navbar');
+
+window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+        // Scrolling down
+        navbar.style.transform = 'translateY(-100%)';
+    } else {
+        // Scrolling up
+        navbar.style.transform = 'translateY(0)';
+    }
+
+    lastScrollTop = scrollTop;
+});
+
+// Nested dropdowns for desktop
+const categoryItems = document.querySelectorAll('.relative.group');
+categoryItems.forEach(item => {
+    const nestedMenu = item.querySelector('.hidden.absolute.left-full');
+    if (nestedMenu) {
+        item.addEventListener('mouseenter', () => {
+            nestedMenu.classList.remove('hidden');
+        });
+        item.addEventListener('mouseleave', () => {
+            nestedMenu.classList.add('hidden');
+        });
+    }
+});
+</script>
+
+</body>
+</html>

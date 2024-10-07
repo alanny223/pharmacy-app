@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <style>
+        /* Amélioration de l'animation pour une transition plus fluide */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .faq-answer.active {
+            max-height: 500px; /* Ajustez cette valeur selon vos besoins */
+        }
+    </style>
+
+<body class="bg-gray-100 dark:bg-gray-900 text-black dark:text-gray-200">
+    <div class="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <h1 class="text-center text-4xl font-bold mb-12">FAQ</h1>
+
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                <div class="mb-4 md:mb-0 text-center md:text-left">
+                    <h2 class="font-semibold text-2xl mb-2">Questions fréquentes</h2>
+                    <p class="text-black dark:text-gray-300">Si vous ne trouvez pas votre réponse, n'hésitez pas à nous contacter.</p>
+                </div>
+                <div class="w-full md:w-auto">
+                    <div class="relative">
+                        <input type="text" placeholder="Rechercher" class="w-full md:w-64 px-4 py-2 rounded-full border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 text-black" />
+                        <svg class="absolute right-3 top-2.5 h-5 w-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-4">
+            <!-- Les questions FAQ commencent ici -->
+            <div class="faq-item bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-300">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-lg">Comment savoir si un produit est disponible en boutique ?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </button>
+                <div class="faq-answer px-6 py-4 bg-gray-50 dark:bg-gray-700">
+                    <p class="text-gray-600 dark:text-gray-300">Vous pouvez vérifier la disponibilité des produits en boutique directement sur notre site web ou en contactant le service client. Nous mettons régulièrement à jour nos stocks en ligne pour refléter la disponibilité réelle dans nos magasins.</p>
+                </div>
+            </div>
+
+
+            <!-- Les questions FAQ commencent ici -->
+            <div class="faq-item bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-300">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-lg">Comment savoir si un produit est disponible en boutique ?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </button>
+                <div class="faq-answer px-6 py-4 bg-gray-50 dark:bg-gray-700">
+                    <p class="text-gray-600 dark:text-gray-300">Vous pouvez vérifier la disponibilité des produits en boutique directement sur notre site web ou en contactant le service client. Nous mettons régulièrement à jour nos stocks en ligne pour refléter la disponibilité réelle dans nos magasins.</p>
+                </div>
+            </div>
+
+
+            <!-- Les questions FAQ commencent ici -->
+            <div class="faq-item bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-300">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-lg">Comment savoir si un produit est disponible en boutique ?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </button>
+                <div class="faq-answer px-6 py-4 bg-gray-50 dark:bg-gray-700">
+                    <p class="text-gray-600 dark:text-gray-300">Vous pouvez vérifier la disponibilité des produits en boutique directement sur notre site web ou en contactant le service client. Nous mettons régulièrement à jour nos stocks en ligne pour refléter la disponibilité réelle dans nos magasins.</p>
+                </div>
+            </div>
+
+
+            <!-- Les questions FAQ commencent ici -->
+            <div class="faq-item bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-300">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-lg">Comment savoir si un produit est disponible en boutique ?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </button>
+                <div class="faq-answer px-6 py-4 bg-gray-50 dark:bg-gray-700">
+                    <p class="text-gray-600 dark:text-gray-300">Vous pouvez vérifier la disponibilité des produits en boutique directement sur notre site web ou en contactant le service client. Nous mettons régulièrement à jour nos stocks en ligne pour refléter la disponibilité réelle dans nos magasins.</p>
+                </div>
+            </div>
+
+
+            <!-- Les questions FAQ commencent ici -->
+            <div class="faq-item bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-300">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-lg">Comment savoir si un produit est disponible en boutique ?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </button>
+                <div class="faq-answer px-6 py-4 bg-gray-50 dark:bg-gray-700">
+                    <p class="text-gray-600 dark:text-gray-300">Vous pouvez vérifier la disponibilité des produits en boutique directement sur notre site web ou en contactant le service client. Nous mettons régulièrement à jour nos stocks en ligne pour refléter la disponibilité réelle dans nos magasins.</p>
+                </div>
+            </div>
+
+
+            <!-- Les questions FAQ commencent ici -->
+            <div class="faq-item bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-300">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-lg">Comment savoir si un produit est disponible en boutique ?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </button>
+                <div class="faq-answer px-6 py-4 bg-gray-50 dark:bg-gray-700">
+                    <p class="text-gray-600 dark:text-gray-300">Vous pouvez vérifier la disponibilité des produits en boutique directement sur notre site web ou en contactant le service client. Nous mettons régulièrement à jour nos stocks en ligne pour refléter la disponibilité réelle dans nos magasins.</p>
+                </div>
+            </div>
+
+
+            <!-- Les questions FAQ commencent ici -->
+            <div class="faq-item bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-300">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-lg">Comment savoir si un produit est disponible en boutique ?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </button>
+                <div class="faq-answer px-6 py-4 bg-gray-50 dark:bg-gray-700">
+                    <p class="text-gray-600 dark:text-gray-300">Vous pouvez vérifier la disponibilité des produits en boutique directement sur notre site web ou en contactant le service client. Nous mettons régulièrement à jour nos stocks en ligne pour refléter la disponibilité réelle dans nos magasins.</p>
+                </div>
+            </div>
+
+
+            <!-- Les questions FAQ commencent ici -->
+            <div class="faq-item bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-300">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-lg">Comment savoir si un produit est disponible en boutique ?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </button>
+                <div class="faq-answer px-6 py-4 bg-gray-50 dark:bg-gray-700">
+                    <p class="text-gray-600 dark:text-gray-300">Vous pouvez vérifier la disponibilité des produits en boutique directement sur notre site web ou en contactant le service client. Nous mettons régulièrement à jour nos stocks en ligne pour refléter la disponibilité réelle dans nos magasins.</p>
+                </div>
+            </div>
+
+
+            <!-- Les questions FAQ commencent ici -->
+            <div class="faq-item bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-300">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-lg">Comment savoir si un produit est disponible en boutique ?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </button>
+                <div class="faq-answer px-6 py-4 bg-gray-50 dark:bg-gray-700">
+                    <p class="text-gray-600 dark:text-gray-300">Vous pouvez vérifier la disponibilité des produits en boutique directement sur notre site web ou en contactant le service client. Nous mettons régulièrement à jour nos stocks en ligne pour refléter la disponibilité réelle dans nos magasins.</p>
+                </div>
+            </div>
+
+
+            <!-- Les questions FAQ commencent ici -->
+            <div class="faq-item bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-300">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-lg">Comment savoir si un produit est disponible en boutique ?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </button>
+                <div class="faq-answer px-6 py-4 bg-gray-50 dark:bg-gray-700">
+                    <p class="text-gray-600 dark:text-gray-300">Vous pouvez vérifier la disponibilité des produits en boutique directement sur notre site web ou en contactant le service client. Nous mettons régulièrement à jour nos stocks en ligne pour refléter la disponibilité réelle dans nos magasins.</p>
+                </div>
+            </div>
+
+
+            <!-- Les questions FAQ commencent ici -->
+            <div class="faq-item bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-300">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-lg">Comment savoir si un produit est disponible en boutique ?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </button>
+                <div class="faq-answer px-6 py-4 bg-gray-50 dark:bg-gray-700">
+                    <p class="text-gray-600 dark:text-gray-300">Vous pouvez vérifier la disponibilité des produits en boutique directement sur notre site web ou en contactant le service client. Nous mettons régulièrement à jour nos stocks en ligne pour refléter la disponibilité réelle dans nos magasins.</p>
+                </div>
+            </div>
+
+
+            <!-- Les questions FAQ commencent ici -->
+            <div class="faq-item bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-300">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-lg">Comment savoir si un produit est disponible en boutique ?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </button>
+                <div class="faq-answer px-6 py-4 bg-gray-50 dark:bg-gray-700">
+                    <p class="text-gray-600 dark:text-gray-300">Vous pouvez vérifier la disponibilité des produits en boutique directement sur notre site web ou en contactant le service client. Nous mettons régulièrement à jour nos stocks en ligne pour refléter la disponibilité réelle dans nos magasins.</p>
+                </div>
+            </div>
+
+
+            <!-- Les questions FAQ commencent ici -->
+            <div class="faq-item bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-300">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-lg">Comment savoir si un produit est disponible en boutique ?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </button>
+                <div class="faq-answer px-6 py-4 bg-gray-50 dark:bg-gray-700">
+                    <p class="text-gray-600 dark:text-gray-300">Vous pouvez vérifier la disponibilité des produits en boutique directement sur notre site web ou en contactant le service client. Nous mettons régulièrement à jour nos stocks en ligne pour refléter la disponibilité réelle dans nos magasins.</p>
+                </div>
+            </div>
+
+
+            <!-- Les questions FAQ commencent ici -->
+            <div class="faq-item bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-4 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 transition-colors duration-300">
+                    <div class="flex justify-between items-center">
+                        <span class="font-medium text-lg">Comment savoir si un produit est disponible en boutique ?</span>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </button>
+                <div class="faq-answer px-6 py-4 bg-gray-50 dark:bg-gray-700">
+                    <p class="text-gray-600 dark:text-gray-300">Vous pouvez vérifier la disponibilité des produits en boutique directement sur notre site web ou en contactant le service client. Nous mettons régulièrement à jour nos stocks en ligne pour refléter la disponibilité réelle dans nos magasins.</p>
+                </div>
+            </div>
+            <!-- Répétez la structure ci-dessus pour chaque question FAQ -->
+            <!-- ... -->
+
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            const icon = question.querySelector('svg');
+
+            question.addEventListener('click', () => {
+                answer.classList.toggle('active');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+
+        // Fonctionnalité de recherche
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer p').textContent.toLowerCase();
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
+</body>
+{% endblock %}

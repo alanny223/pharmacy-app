@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="bg-gradient-to-br from-blue-100 to-purple-100 min-h-screen py-12">
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-3xl font-bold text-center mb-8 text-purple-800 animate-fade-in-down">Shipped Items</h1>
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden animate-fade-in">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-purple-600 text-white">
+                            <tr>
+                                <th class="py-3 px-4 text-left">Order</th>
+                                <th class="py-3 px-4 text-left">Price</th>
+                                <th class="py-3 px-4 text-left">Customer Email</th>
+                                <th class="py-3 px-4 text-left">Date Shipped</th>
+                                <th class="py-3 px-4 text-left">Shipped</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in orders %}
+                            <tr class="border-b border-gray-200 hover:bg-gray-100 transition duration-150 ease-in-out">
+                                <td class="py-3 px-4"><a href="{% url 'orders' item.id %}" class="text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out">{{ item.id }}</a></td>
+                                <td class="py-3 px-4">{{ item.amount_paid }} FCFA</td>
+                                <td class="py-3 px-4">{{ item.email }}</td>
+                                <td class="py-3 px-4">{{ item.date_shipped }}</td>
+                                <td class="py-3 px-4">
+                                    <form method="POST" class="inline-block">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="shipping_status" value="false">
+                                        <input type="hidden" name="num" value={{item.id}}>
+                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out transform hover:scale-105 focus:outline-none focus:shadow-outline">
+                                            Mark UnShipped
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    .animate-fade-in-down {
+        animation: fadeInDown 0.5s ease-out;
+    }
+    .animate-fade-in {
+        animation: fadeIn 0.5s ease-out;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const table = document.querySelector('table');
+        const rows = table.querySelectorAll('tbody tr');
+        
+        rows.forEach((row, index) => {
+            row.style.animationDelay = `${index * 0.1}s`;
+            row.classList.add('opacity-0');
+            row.classList.add('animate-fade-in');
+        });
+    });
+</script>
+{% endblock %}

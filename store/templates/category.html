@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="py-12 bg-gray-100">
+    <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold text-center mb-10">{{ category }} Category</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {% for product in products %}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105">
+                <div class="relative aspect-w-1 aspect-h-1 overflow-hidden group">
+                    <img
+                        class="w-full h-full object-contain transition-transform duration-500 ease-in-out group-hover:scale-110"
+                        src="{{ product.image.url }}"
+                        alt="{{ product.name }}"
+                    >
+                    {% if product.is_sale %}
+                    <div class="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full animate-pulse">
+                        Sale
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="p-4">
+                    <h2 class="text-xl font-semibold mb-2 truncate">{{ product.name }}</h2>
+                    <p class="text-sm text-gray-600 mb-2">{{ product.availability_status }}</p>
+                    <div class="mb-4">
+                        {% if product.is_sale %}
+                        <span class="text-gray-500 line-through mr-2">{{ product.price }} FCFA</span>
+                        <span class="text-red-600 font-bold">{{ product.sale_price }} FCFA</span>
+                        {% else %}
+                        <span class="text-gray-800 font-bold">{{ product.price }} FCFA</span>
+                        {% endif %}
+                    </div>
+                    <a href="{% url 'product' product.id %}" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 transform hover:scale-105">
+                        View Product
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* Add these styles for aspect ratio container */
+.aspect-w-1 {
+    position: relative;
+    padding-bottom: 100%;
+}
+.aspect-w-1 > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const products = document.querySelectorAll('.grid > div');
+    products.forEach((product, index) => {
+        product.style.opacity = '0';
+        setTimeout(() => {
+            product.classList.add('animate-fade-in-up');
+        }, index * 100);
+    });
+});
+</script>
+{% endblock %}

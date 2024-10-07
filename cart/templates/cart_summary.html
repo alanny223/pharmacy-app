@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-gray-100  py-3">
+    <div class="container mx-auto font-['Poppins'] px-4">
+        <div class="text-sm">
+            <a href="{% url 'home' %}" class="text-gray-900 font-semibold hover:text-blue-600">Home</a>
+            <span class="mx-2 text-gray-500">/</span>
+            <span class="text-gray-900 font-semibold">Shopping Cart</span>
+        </div>
+    </div>
+</div>
+
+<div class="site-section">
+    <div class="container font-['Poppins'] mx-auto px-4 py-12">
+        {% if cart_products %}
+        <div class="mb-12">
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b">
+                        <th class="text-left pb-4">Image</th>
+                        <th class="text-left pb-4">Product</th>
+                        <th class="text-left pb-4">Price</th>
+                        <th class="text-left pb-4">Quantity</th>
+                        <th class="text-left pb-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in cart_products %}
+                    <tr class="border-b">
+                        <td class="py-4">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-16 h-16 object-cover">
+                        </td>
+                        <td class="py-4">
+                            <h3 class="text-lg font-semibold">{{ product.name }}</h3>
+                            <p class="text-sm text-gray-600">{{ product.description }}</p>
+                        </td>
+                        <td class="py-4">
+                            {% if product.is_sale %}
+                            <div class="flex items-center">
+                                <span class="text-red-600 font-semibold">{{ product.sale_price }} Fcfa</span>
+                                <span class="ml-2 line-through text-gray-500">{{ product.price }} Fcfa</span>
+                            </div>
+                            {% else %}
+                            <span class="font-semibold">{{ product.price }} Fcfa</span>
+                            {% endif %}
+                        </td>
+                        <td class="py-4">
+                            <select class="form-select form-select-sm" id="select{{product.id}}">
+                                {% for key, value in quantities.items %}
+                                    {% if key == product.id|slugify %}
+                                    <option selected>{{ value }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </td>
+                        <td class="py-4">
+                            <button type="button" data-index="{{product.id}}" class="btn btn-sm bg-green-500 btn-secondary update-cart">Update</button>
+                            <button type="button" data-index="{{product.id}}" class="btn btn-sm btn-danger bg-red-500 delete-product">Remove</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="flex flex-wrap -mx-4">
+            <div class="w-full md:w-1/2 px-4 mb-8 md:mb-0">
+                <div class="flex flex-wrap -mx-2 mb-8">
+                    <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
+                        <a href="{% url 'shop' %}" class="w-full bg-gray-200 text-black font-semibold py-2 px-4 rounded hover:bg-gray-300 inline-block text-center">Continue Shopping</a>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 px-4">
+                <div class="bg-gray-100 p-6 rounded">
+                    <h3 class="text-2xl font-bold mb-6">Cart Totals</h3>
+                    <div class="flex justify-between font-semibold mb-6">
+                        <span>Total</span>
+                        <span class="font-semibold">{{ totals }} Fcfa</span>
+                    </div>
+                    <a href="{% url 'checkout' %}" class="w-full bg-blue-600 text-white font-semibold py-3 rounded hover:bg-blue-700 inline-block text-center">Proceed To Checkout</a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="text-center py-12">
+            <h2 class="text-2xl font-semibold mb-4">Your Cart is Empty</h2>
+            <p class="mb-8">Looks like you haven't added any items to your cart yet.</p>
+            <a href="{% url 'shop'%}" class="bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700">Start Shopping</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+// Update Cart
+$(document).on('click', '.update-cart', function(e){
+    e.preventDefault();
+    var productid = $(this).data('index');
+
+    $.ajax({
+        type: 'POST',
+        url: '{% url 'cart_update' %}',
+        data: {
+            product_id: $(this).data('index'),
+            product_qty: $('#select' + productid + ' option:selected').text(),
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            action: 'post'
+        },
+        success: function(json){
+            location.reload();
+        },
+        error: function(xhr, errmsg, err){
+        }
+    });
+});
+
+// Delete Item From Cart
+$(document).on('click', '.delete-product', function(e){
+    e.preventDefault();
+
+    $.ajax({
+        type: 'POST',
+        url: '{% url 'cart_delete' %}',
+        data: {
+            product_id: $(this).data('index'),
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            action: 'post'
+        },
+        success: function(json){
+            location.reload();
+        },
+        error: function(xhr, errmsg, err){
+        }
+    });
+});
+</script>
+{% endblock %}

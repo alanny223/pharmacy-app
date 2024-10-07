@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="bg-[url('/media/uploads/socials/backgroung-pattern-1.png')] py-12">
+
+<br/><br/>
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {% for product in products %}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105">
+                <div class="relative h-64 overflow-hidden group">
+                    <img class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-110" src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% if product.is_sale %}
+                    <div class="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        Sale
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold mb-2 truncate">{{ product.name }}</h3>
+                    {% if product.is_sale %}
+                    <div class="flex justify-center text-yellow-400 mb-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-gray-500 line-through mr-2">{{ product.price }} FCFA</span>
+                        <span class="text-red-600 font-bold">{{ product.sale_price }} FCFA</span>
+                    </div>
+                    {% else %}
+                    <p class="text-gray-700 font-bold mb-2">{{ product.price }} FCFA</p>
+                    {% endif %}
+                    <a href="{% url 'product' product.id %}" class="block w-full text-center bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                        View Product
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const products = document.querySelectorAll('.grid > div');
+    products.forEach((product, index) => {
+        setTimeout(() => {
+            product.classList.add('animate-fade-in');
+        }, index * 100);
+    });
+});
+</script>
+{% endblock %}

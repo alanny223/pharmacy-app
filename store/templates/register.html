@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-gray-50 flex flex-col justify-center relative overflow-hidden">
+    <!-- Animated background elements -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute top-0 left-0 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div class="absolute top-0 right-0 w-40 h-40 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-0 left-0 w-40 h-40 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="max-w-md mx-auto">
+            <div class="text-center mb-8">
+                <h2 class="text-4xl font-extrabold text-gray-900 mb-2">Create Account</h2>
+                <p class="text-gray-600">Join our community today</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                <div class="p-8">
+                    <form id="signupForm" method="POST" action="{% url 'register' %}" class="space-y-6">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="relative">
+                                {{ field }}
+                                <label for="{{ field.id_for_label }}" class="absolute left-3 top-3 text-gray-400 transition-all duration-300 pointer-events-none">
+                                    {{ field.label }}
+                                </label>
+                                {% if field.errors %}
+                                    <p class="text-red-500 text-xs italic mt-1">{{ field.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="mt-8">
+                            <button type="submit" class="w-full py-3 px-4 border border-transparent rounded-xl text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
+                                Register
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center mt-6">
+                <p class="text-gray-600">Already have an account?
+                    <a href="{% url 'login' %}" class="text-purple-600 hover:text-purple-700 font-medium transition-colors duration-300">Sign in</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+}
+.animate-blob {
+    animation: blob 7s infinite;
+}
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+.animation-delay-4000 {
+    animation-delay: 4s;
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Initial animation
+    gsap.from(".container", {
+        duration: 1,
+        y: 100,
+        opacity: 0,
+        ease: "power4.out"
+    });
+
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        // Add classes for styling
+        input.classList.add(
+            'peer',
+            'appearance-none',
+            'rounded-xl',
+            'block',
+            'w-full',
+            'px-4',
+            'py-3',
+            'border',
+            'border-gray-200',
+            'placeholder-transparent',
+            'text-gray-900',
+            'focus:outline-none',
+            'focus:ring-2',
+            'focus:ring-purple-500',
+            'focus:border-transparent',
+            'transition-all',
+            'duration-300'
+        );
+
+        const label = input.nextElementSibling;
+        if (label && label.tagName === 'LABEL') {
+            label.classList.add(
+                'transition-all',
+                'duration-300',
+                'peer-focus:-translate-y-6',
+                'peer-focus:scale-75',
+                'peer-focus:text-purple-600',
+                'peer-valid:-translate-y-6',
+                'peer-valid:scale-75',
+                'peer-valid:text-gray-600'
+            );
+
+            // Check if input has value on page load
+            if (input.value) {
+                label.classList.add('-translate-y-6', 'scale-75');
+            }
+        }
+
+        // Input focus animation
+        input.addEventListener('focus', () => {
+            gsap.to(input, {
+                scale: 1.02,
+                duration: 0.3,
+                ease: "power2.out"
+            });
+        });
+
+        // Input blur animation
+        input.addEventListener('blur', () => {
+            gsap.to(input, {
+                scale: 1,
+                duration: 0.3,
+                ease: "power2.out"
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

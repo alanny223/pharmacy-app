@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <style>
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .animate-bounce-custom {
+            animation: bounce 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-green-400 to-blue-500 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-2xl max-w-md w-full text-center" id="successCard">
+        <div class="mb-8">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-green-500 mx-auto animate-bounce-custom" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+        <h1 class="text-4xl font-bold mb-4 text-gray-800">Payment Successful!</h1>
+        <p class="text-gray-600 mb-8">Thank you for your purchase. Your order has been processed successfully.</p>
+        <div class="mb-8">
+            <p class="text-2xl font-semibold text-gray-800" id="orderNumber"></p>
+        </div>
+        <div class="space-y-4">
+            <a href="#" class="block w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded transition duration-300">
+                View Order Details
+            </a>
+            <a href="#" class="block w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded transition duration-300">
+                Continue Shopping
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Generate a random order number
+        function generateOrderNumber() {
+            return 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+        }
+
+        // Animate elements
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Set order number
+            document.getElementById('orderNumber').textContent = `Order #${generateOrderNumber()}`;
+
+            // Animate card appearance
+            gsap.from("#successCard", {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out"
+            });
+
+            // Animate text elements
+            gsap.from("h1, p, #orderNumber", {
+                duration: 1,
+                y: 20,
+                opacity: 0,
+                stagger: 0.2,
+                delay: 0.5,
+                ease: "power3.out"
+            });
+
+            // Animate buttons
+            gsap.from("a", {
+                duration: 0.8,
+                scale: 0.5,
+                opacity: 0,
+                stagger: 0.2,
+                delay: 1,
+                ease: "back.out(1.7)"
+            });
+        });
+
+        // Add hover effect to buttons
+        const buttons = document.querySelectorAll('a');
+        buttons.forEach(button => {
+            button.addEventListener('mouseover', () => {
+                gsap.to(button, {duration: 0.3, scale: 1.05, ease: "power1.out"});
+            });
+            button.addEventListener('mouseout', () => {
+                gsap.to(button, {duration: 0.3, scale: 1, ease: "power1.out"});
+            });
+        });
+    </script>
+</body>
+</html>

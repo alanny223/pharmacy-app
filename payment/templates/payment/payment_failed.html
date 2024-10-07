@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <style>
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+            100% { transform: translateX(0); }
+        }
+        .animate-shake {
+            animation: shake 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-red-400 to-pink-500 min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-2xl max-w-md w-full text-center" id="failureCard">
+        <div class="mb-8">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-red-500 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+        <h1 class="text-4xl font-bold mb-4 text-gray-800">Payment Failed</h1>
+        <p class="text-gray-600 mb-8">We're sorry, but there was an issue processing your payment. Please try again or use a different payment method.</p>
+        <div class="mb-8">
+            <p class="text-xl font-semibold text-red-600" id="errorMessage"></p>
+        </div>
+        <div class="space-y-4">
+            <button id="retryPayment" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded transition duration-300">
+                Retry Payment
+            </button>
+            <a href="#" class="block w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-4 rounded transition duration-300">
+                Change Payment Method
+            </a>
+            <a href="#" class="block text-blue-500 hover:text-blue-600 font-medium">
+                Contact Support
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Generate a random error message
+        function generateErrorMessage() {
+            const errors = [
+                "Transaction declined by bank",
+                "Insufficient funds",
+                "Card expired",
+                "Invalid card information",
+                "Network error occurred"
+            ];
+            return errors[Math.floor(Math.random() * errors.length)];
+        }
+
+        // Animate elements
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Set error message
+            document.getElementById('errorMessage').textContent = generateErrorMessage();
+
+            // Animate card appearance
+            gsap.from("#failureCard", {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out"
+            });
+
+            // Animate text elements
+            gsap.from("h1, p, #errorMessage", {
+                duration: 1,
+                y: 20,
+                opacity: 0,
+                stagger: 0.2,
+                delay: 0.5,
+                ease: "power3.out"
+            });
+
+            // Animate buttons
+            gsap.from("button, a", {
+                duration: 0.8,
+                scale: 0.5,
+                opacity: 0,
+                stagger: 0.2,
+                delay: 1,
+                ease: "back.out(1.7)"
+            });
+
+            // Shake animation for error icon
+            gsap.to("svg", {
+                duration: 0.5,
+                x: 10,
+                yoyo: true,
+                repeat: 5,
+                ease: "power1.inOut",
+                delay: 1.5
+            });
+        });
+
+        // Add hover effect to buttons
+        const buttons = document.querySelectorAll('button, a');
+        buttons.forEach(button => {
+            button.addEventListener('mouseover', () => {
+                gsap.to(button, {duration: 0.3, scale: 1.05, ease: "power1.out"});
+            });
+            button.addEventListener('mouseout', () => {
+                gsap.to(button, {duration: 0.3, scale: 1, ease: "power1.out"});
+            });
+        });
+
+        // Add click event to retry button
+        document.getElementById('retryPayment').addEventListener('click', () => {
+            const card = document.getElementById('failureCard');
+            card.classList.add('animate-shake');
+            setTimeout(() => {
+                card.classList.remove('animate-shake');
+            }, 500);
+        });
+    </script>
+</body>
+</html>

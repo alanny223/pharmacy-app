@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-gray-50 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <!-- Animated background shapes -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-8 left-1/4 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+    </div>
+
+    <div class="max-w-4xl mx-auto relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl mb-4">Update Profile</h1>
+            <p class="text-xl text-gray-600">Please provide your billing and shipping information</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden transform hover:scale-[1.01] transition-all duration-300">
+            <form method="POST" action="{% url 'update_info' %}" class="divide-y divide-gray-200">
+                {% csrf_token %}
+
+                <!-- Billing Section -->
+                <div class="p-8">
+                    <div class="flex items-center mb-6">
+                        <div class="flex-shrink-0 w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                            </svg>
+                        </div>
+                        <h2 class="ml-4 text-2xl font-bold text-gray-900">Billing Information</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
+                        {% for field in form %}
+                        <div class="relative {% if field.name in 'address,address2' %}sm:col-span-2{% endif %}">
+                            {{ field }}
+                            <label for="{{ field.id_for_label }}" class="absolute left-3 top-3 text-gray-400 pointer-events-none transition-all duration-300">
+                                {{ field.label }}
+                            </label>
+                            {% if field.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ field.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Shipping Section -->
+                <div class="p-8">
+                    <div class="flex items-center mb-6">
+                        <div class="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+                            </svg>
+                        </div>
+                        <h2 class="ml-4 text-2xl font-bold text-gray-900">Shipping Information</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
+                        {% for field in shipping_form %}
+                        <div class="relative {% if field.name in 'address,address2' %}sm:col-span-2{% endif %}">
+                            {{ field }}
+                            <label for="{{ field.id_for_label }}" class="absolute left-3 top-3 text-gray-400 pointer-events-none transition-all duration-300">
+                                {{ field.label }}
+                            </label>
+                            {% if field.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ field.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="px-8 py-6 bg-gray-50">
+                    <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-lg font-medium text-white bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        Update Profile
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+@keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+}
+.animate-blob {
+    animation: blob 7s infinite;
+}
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+.animation-delay-4000 {
+    animation-delay: 4s;
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Initial animations
+    gsap.from(".max-w-4xl", {
+        duration: 1,
+        y: 50,
+        opacity: 0,
+        ease: "power4.out"
+    });
+
+    // Set up form inputs
+    const inputs = document.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+        // Add Tailwind classes
+        input.classList.add(
+            'peer',
+            'block',
+            'w-full',
+            'rounded-xl',
+            'border-gray-300',
+            'shadow-sm',
+            'focus:border-purple-500',
+            'focus:ring-purple-500',
+            'placeholder-transparent',
+            'transition-all',
+            'duration-300'
+        );
+
+        // Add padding based on input type
+        if (input.tagName === 'SELECT') {
+            input.classList.add('px-3', 'py-3');
+        } else if (input.tagName === 'TEXTAREA') {
+            input.classList.add('px-3', 'py-2');
+        } else {
+            input.classList.add('px-3', 'py-3');
+        }
+
+        const label = input.nextElementSibling;
+        if (label && label.tagName === 'LABEL') {
+            label.classList.add(
+                'absolute',
+                'text-sm',
+                'text-gray-500',
+                'transition-all',
+                'duration-300',
+                'transform',
+                '-translate-y-6',
+                'scale-75',
+                'top-3',
+                'z-10',
+                'origin-[0]',
+                'peer-placeholder-shown:scale-100',
+                'peer-placeholder-shown:translate-y-0',
+                'peer-focus:scale-75',
+                'peer-focus:-translate-y-6',
+                'peer-focus:text-purple-600'
+            );
+
+            // Check if input has a value on page load
+            if (input.value) {
+                label.classList.add('-translate-y-6', 'scale-75');
+            }
+        }
+
+        // Animations on focus
+        input.addEventListener('focus', () => {
+            gsap.to(input, {
+                scale: 1.02,
+                duration: 0.3,
+                ease: "power2.out"
+            });
+        });
+
+        input.addEventListener('blur', () => {
+            gsap.to(input, {
+                scale: 1,
+                duration: 0.3,
+                ease: "power2.out"
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

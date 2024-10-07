@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block content %}
+<br/><br/>
+<div class="container mx-auto px-4 py-8">
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div class="md:flex">
+      <div class="md:flex-shrink-0 relative">
+        <img id="product-image" src="{{ product.image.url }}" alt="{{ product.name }}" class="h-full w-full object-cover md:w-48 cursor-zoom-in transition duration-300 ease-in-out transform hover:scale-105">
+      </div>
+      <div class="p-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-2">{{ product.name }}</h2>
+        <p class="text-gray-600 mb-4">{{ product.description }}</p>
+
+        {% if product.is_sale %}
+          <div class="flex items-center mb-2">
+            <span class="text-yellow-400 mr-1">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+            </span>
+            <span class="text-sm font-semibold text-yellow-600">Promo!</span>
+          </div>
+          <p class="text-gray-500 line-through">Price: {{ product.price }} FCFA</p>
+          <p class="text-xl font-bold text-green-600">Promo Price: {{ product.sale_price }} FCFA</p>
+        {% else %}
+          <p class="text-xl font-bold text-gray-800">Price: {{ product.price }} FCFA</p>
+        {% endif %}
+
+        <div class="mt-4 flex items-center">
+          <label for="qty-cart" class="mr-2 text-gray-700">Quantity:</label>
+          <select id="qty-cart" class="form-select block w-20 bg-gray-100 border border-gray-300 text-gray-700 py-2 px-3 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+
+        <div class="mt-6 flex space-x-4">
+          <a href="{% url 'shop'%}" class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition duration-300">Return Shopping</a>
+          <button id="add-cart" value="{{ product.id }}" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition duration-300">Add To Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Image Modal -->
+<div id="image-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+  <div class="max-w-3xl max-h-full p-4">
+    <img id="modal-image" src="" alt="Zoomed product image" class="max-w-full max-h-full object-contain">
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const addToCartBtn = document.getElementById('add-cart');
+  const productImage = document.getElementById('product-image');
+  const imageModal = document.getElementById('image-modal');
+  const modalImage = document.getElementById('modal-image');
+
+  // Add to cart functionality
+  addToCartBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    const productId = this.value;
+    const quantity = document.getElementById('qty-cart').value;
+
+    fetch('{% url 'cart_add' %}', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'X-CSRFToken': '{{ csrf_token }}'
+      },
+      body: `product_id=${productId}&product_qty=${quantity}&action=post`
+    })
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById("cart_quantity").textContent = data.qty;
+      // Show a toast notification
+      showToast('Product added to cart!');
+    })
+    .catch(error => console.error('Error:', error));
+  });
+
+  // Image zoom functionality
+  productImage.addEventListener('click', function() {
+    modalImage.src = this.src;
+    imageModal.classList.remove('hidden');
+    imageModal.classList.add('flex');
+  });
+
+  imageModal.addEventListener('click', function() {
+    this.classList.remove('flex');
+    this.classList.add('hidden');
+  });
+
+  // Toast notification function
+  function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-4 py-2 rounded shadow-lg transition-all duration-300 z-50';
+    toast.style.opacity = '0';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    // Fade in
+    setTimeout(() => {
+      toast.style.opacity = '1';
+    }, 10);
+
+    // Fade out and remove
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      setTimeout(() => {
+        document.body.removeChild(toast);
+      }, 300);
+    }, 3000);
+  }
+});
+</script>
+
+{% endblock %}
