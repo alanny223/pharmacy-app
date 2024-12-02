@@ -12,7 +12,7 @@ import datetime
 from django.urls import reverse
 from paypal.standard.forms import PayPalPaymentsForm
 from django.conf import settings
-import uuid # unique user id for duplictate orders
+import uuid  # unique user id for duplictate orders
 
 
 def orders(request, pk):
@@ -253,6 +253,7 @@ def billing_info(request):
     else:
         messages.success(request, "Access Denied")
         return redirect('home')
+
 
 def checkout(request):
     # Get the cart

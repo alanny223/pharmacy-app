@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, SetPasswordForm
 from django import forms
-from .models import Profile
+from .models import Profile, ProductReview
 
 
 class SignUpForm(UserCreationForm):
@@ -39,6 +39,7 @@ class UpdateUserForm(UserChangeForm):
     # Hide Password stuff
     password = None
     # Get other fields
+    image = forms.ImageField(label="Image", widget=forms.FileInput(attrs={'class': 'form-control'}), required=False)
     email = forms.EmailField(label="Email", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email Address'}), required=False)
     first_name = forms.CharField(label="First Name", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}), required=False)
     last_name = forms.CharField(label="Last Name", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}), required=False)
@@ -76,6 +77,7 @@ class ChangePasswordForm(SetPasswordForm):
 
 
 class UserInfoForm(forms.ModelForm):
+    image = forms.ImageField(label="Image", widget=forms.FileInput(attrs={'class': 'form-control'}), required=False)
     phone_number = forms.CharField(label="Phone number", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone number'}), required=False)
     address_1 = forms.CharField(label="Address1", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Address1'}), required=False)
     address_2 = forms.CharField(label="Address2", widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Address2'}), required=False)
@@ -86,4 +88,13 @@ class UserInfoForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('phone_number', 'address_1', 'address_2', 'city', 'region_or_state', 'zipcode', 'country', )
+        fields = ('image', 'phone_number', 'address_1', 'address_2', 'city', 'region_or_state', 'zipcode', 'country', )
+
+
+class ProductReviewForm(forms.ModelForm):
+    class Meta:
+        model = ProductReview
+        fields = ['rating', 'review']
+        widgets = {
+            'review': forms.Textarea(attrs={'rows': 4}),
+        }

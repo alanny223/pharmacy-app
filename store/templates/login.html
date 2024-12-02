@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-gray-100 dark:bg-gray-900">
+<html lang="en" class="h-full bg-white">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login In PharmaHope</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     <style>
@@ -24,32 +24,32 @@
     <!-- Main content -->
     <main class="flex-grow flex items-center justify-center p-4">
         <div class="w-full max-w-md">
-            <div id="loginCard" class="bg-white dark:bg-gray-800 shadow-2xl rounded-lg overflow-hidden transform transition-all duration-300 ease-in-out hover:scale-105">
+            <div id="loginCard" class="bg-white  shadow-2xl rounded-lg overflow-hidden transform transition-all duration-300 ease-in-out hover:scale-105">
                 <div class="animate-gradient p-6">
                     <h1 class="text-3xl font-bold text-center text-white mb-4">Welcome Back!</h1>
                 </div>
                 <form method="POST" action="{% url 'login' %}" class="px-8 pt-6 pb-8 mb-4">
                     {% csrf_token %}
                     <div class="mb-6">
-                        <label for="username" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Username</label>
-                        <input name="username" type="text" id="username" class="input-field shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300" placeholder="Enter your Username" required>
+                        <label for="username" class="block text-sm font-semibold text-gray-900 mb-2">Username</label>
+                        <input name="username" type="text" id="username" class="input-field shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 bg-white text-gray-900  focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300" placeholder="Enter your Username" required>
                     </div>
                     <div class="mb-6">
-                        <label for="password" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Password</label>
-                        <input name="password" type="password" id="password" class="input-field shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300" placeholder="Enter your password" required>
+                        <label for="password" class="block text-sm font-semibold text-gray-900 mb-2">Password</label>
+                        <input name="password" type="password" id="password" class="input-field shadow-sm rounded-md w-full px-3 py-2 border border-gray-300  bg-white  text-gray-900  focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300" placeholder="Enter your password" required>
                     </div>
                     <div class="flex items-center mb-6">
                         <input type="checkbox" id="remember" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 focus:outline-none">
-                        <label for="remember" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">Remember me</label>
+                        <label for="remember" class="ml-2 block text-sm text-gray-900">Remember me</label>
                     </div>
                     <div class="mb-6">
                         <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg">
                             Login
                         </button>
                     </div>
-                    <p class="text-center text-sm text-gray-600 dark:text-gray-400">
+                    <p class="text-center text-sm text-gray-700">
                         Don't have an account yet?
-                        <a href="{% url 'register' %}" class="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-300">Register</a>
+                        <a href="{% url 'register' %}" class="font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-300">Register</a>
                     </p>
                 </form>
             </div>

@@ -71,15 +71,15 @@
 </style>
 
 <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const table = document.querySelector('table');
-        const rows = table.querySelectorAll('tbody tr');
-        
-        rows.forEach((row, index) => {
-            row.style.animationDelay = `${index * 0.1}s`;
-            row.classList.add('opacity-0');
-            row.classList.add('animate-fade-in');
-        });
+  document.addEventListener('DOMContentLoaded', function() {
+    const table = document.querySelector('table');
+    const rows = table.querySelectorAll('tbody tr');
+
+    rows.forEach((row, index) => {
+        row.style.animationDelay = `${index * 0.1}s`;
+        row.classList.add('opacity-1');
+        row.classList.add('animate-fade-in');
     });
+});
 </script>
 {% endblock %}

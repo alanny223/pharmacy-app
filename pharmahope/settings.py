@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'theme',
     'paypal.standard.ipn',
     'django_extensions',
+    'django_browser_reload',
 
 
 ]
@@ -55,7 +56,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
+    'django.middleware.locale.LocaleMiddleware',  # For internationalization
+
 ]
+
 
 ROOT_URLCONF = 'pharmahope.urls'
 

@@ -1,15 +1,16 @@
-from django.shortcuts import render, redirect
-from .models import Product, Category, Profile
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Product, Category, Profile, ProductReview
 from django.contrib.auth import authenticate, login, logout, admin
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-# from django.contrib.auth.forms import UserCreationForm
-from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm, UserInfoForm
+from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm, UserInfoForm, ProductReviewForm
 from django.db.models import Q
 import json
 from cart.cart import Cart
 from payment.forms import ShippingForm
-from payment.models import ShippingAddress
+from django.core.paginator import Paginator
+from payment.models import ShippingAddress, Order, OrderItem
 
 
 def home(request):
@@ -25,14 +26,56 @@ def faq(request):
 
 
 def store(request):
+    # Start with all products
     products = Product.objects.all()
+
+    # Get all categories for the filter sidebar
     categories = Category.objects.all()
-    return render(request, 'shop.html', {'products': products, "categories": categories})
+
+    # Sort products
+    sort = request.GET.get('sort')
+    if sort:
+        if sort == 'price_asc':
+            products = products.order_by('price')
+        elif sort == 'price_desc':
+            products = products.order_by('-price')
+        elif sort == 'name_asc':
+            products = products.order_by('name')
+        elif sort == 'name_desc':
+            products = products.order_by('-name')
+
+    # Filter by price range
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    if min_price:
+        products = products.filter(price__gte=min_price)
+    if max_price:
+        products = products.filter(price__lte=max_price)
+
+    # Filter by sale items
+    if request.GET.get('on_sale'):
+        products = products.filter(is_sale=True)
+
+    # Filter by categories
+    category_ids = request.GET.getlist('category')
+    if category_ids:
+        products = products.filter(category__id__in=category_ids)
+
+        # Pagination
+    paginator = Paginator(Product.objects.all(), 9)  # Show 9 products per page
+    page_number = request.GET.get('page', 1)
+    page_objects = paginator.get_page(page_number)
+
+    return render(request, 'pharmacy.html', {'products': products, "categories": categories, 'page_obj': page_objects})
 
 
 # @admin
 def dashboard(request):
     profiles = Profile.objects.all()
+    # categories = Category.objects.all()
+    # products = Product.objects.all()
+    # order = Order.objects.get(id=pk)
+    # items = OrderItem.objects.filter(order=pk)
 
     return render(request, 'dashboard.html', {'profiles': profiles})
 
@@ -66,7 +109,7 @@ def login_user(request):
                     cart.db_add(product=key, quantity=value)
 
             messages.success(request, 'You Have Been Logged in successfully')
-            return redirect('shop')
+            return redirect('pharmacy')
         else:
             messages.warning(request, 'There was an error please try to login....')
             return redirect('login')
@@ -101,8 +144,44 @@ def register_user(request):
 
 
 def product(request, pk):
-    product = Product.objects.get(id=pk)
-    return render(request, 'product.html', {'product': product})
+    product = get_object_or_404(Product, id=pk)
+    reviews = product.reviews.all().order_by('-date')
+    average_rating = product.average_rating()
+
+    if request.method == 'POST' and request.user.is_authenticated:
+        form = ProductReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.product = product
+            review.user = request.user
+            review.save()
+            return redirect('product', pk=pk)
+    else:
+        form = ProductReviewForm()
+
+    context = {
+        'product': product,
+        'reviews': reviews,
+        'average_rating': average_rating,
+        'form': form,
+    }
+    return render(request, 'product.html', context)
+
+
+@login_required
+def add_review(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == 'POST':
+        form = ProductReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.product = product
+            review.user = request.user
+            review.save()
+            return redirect('product', pk=product_id)
+    else:
+        form = ProductReviewForm()
+    return render(request, 'product.html', {'form': form, 'product': product})
 
 
 def category(request, foo):
@@ -172,25 +251,34 @@ def update_info(request):
     if request.user.is_authenticated:
         # Get Current User
         current_user = Profile.objects.get(user__id=request.user.id)
+
         # Get Current User's Shipping Info
         shipping_user = ShippingAddress.objects.get(user__id=request.user.id)
 
-        # Get original User Form
-        form = UserInfoForm(request.POST or None, instance=current_user)
-        # Get User's Shipping Form
-        shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
-        if form.is_valid() or shipping_form.is_valid():
-            # Save original form
-            form.save()
-            # Save shipping form
-            shipping_form.save()
+        if request.method == 'POST':
+            # Get original User Form
+            form = UserInfoForm(request.POST or None, instance=current_user)
 
-            messages.success(request, "Your Info Has Been Updated!!")
-            return redirect('home')
-        return render(request, "update_info.html", {'form': form, 'shipping_form': shipping_form})
+            # Get User's Shipping Form
+            shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
+
+            if form.is_valid() and shipping_form.is_valid():
+                # Save original form
+                form.save()
+
+                # Save shipping form
+                shipping_address = shipping_form.save(commit=False)
+                shipping_address.user = current_user
+                shipping_address.save()
+
+                messages.success(request, "Your Info Has Been Updated!!")
+                return redirect('profile')
+
+            return render(request, "update_info.html", {'form': form, 'shipping_form': shipping_form})
+
     else:
         messages.warning(request, "You Must Be Logged In To Access That Page!!")
-        return redirect('home')
+    return redirect('home')
 
 
 def search(request):

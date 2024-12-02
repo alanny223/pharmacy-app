@@ -1,5 +1,6 @@
 from django.db import models
 import datetime
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 
@@ -7,6 +8,7 @@ from django.db.models.signals import post_save
 # Create customer profile
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='uploads/profile/')
     date_modified = models.DateTimeField(User, auto_now_add=True)
     phone_number = models.CharField(max_length=20, blank=True)
     address_1 = models.CharField(max_length=180, blank=True)
@@ -76,6 +78,37 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def average_rating(self):
+        reviews = self.reviews.all()
+        if reviews:
+            return sum(review.rating for review in reviews) / len(reviews)
+        return 0
+
+
+class ProductReview(models.Model):
+    RATING_CHOICES = [
+        (1, '1 Star'),
+        (2, '2 Stars'),
+        (3, '3 Stars'),
+        (4, '4 Stars'),
+        (5, '5 Stars'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    review = models.TextField()
+    rating = models.IntegerField(choices=RATING_CHOICES, validators=[MinValueValidator(1), MaxValueValidator(5)])
+    date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "Product Reviews"
+
+    def __str__(self):
+        return f"{self.product.name} - {self.user.username}"
+
+    def get_star_rating(self):
+        return '★' * self.rating + '☆' * (5 - self.rating)
 
 
 # customer order
